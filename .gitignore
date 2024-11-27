@@ -1,0 +1,46 @@
+# Backend build output
+backend/[Bb]in/
+backend/[Oo]bj/
+backend/[Dd]ebug/
+backend/[Rr]elease/
+backend/[Mm]igrations/
+
+# Configuration and secrets
+*.env
+*.env.local
+backend/appsettings.Development.json
+backend/appsettings.*.json
+!backend/appsettings.json
+
+# IDE - Visual Studio and VS Code
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.user
+*.suo
+*.userprefs
+
+# Logs and debugging
+backend/[Ll]ogs/
+*.log
+npm-debug.log*
+
+# Dependencies
+backend/packages/
+node_modules/
+*.nuget.props
+*.nuget.targets
+
+# OS generated files
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*~
+*.swp
+*.bak
