@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using backend.Data;
 using dotenv.net;
 using Microsoft.EntityFrameworkCore;
@@ -7,8 +8,7 @@ DotEnv.Load();
 
 var stripeSecretKey = Environment.GetEnvironmentVariable("STRIPE_KEY") ?? throw new ArgumentNullException("STRIPE_KEY");
 var dbConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION") ?? throw new Exception("Must provide db connection string");
-
-Console.WriteLine("Connected to: " + dbConnectionString);
+var azureStorageConnectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING") ?? throw new Exception("Must provide Azure Storage connection string");
 
 StripeConfiguration.ApiKey = stripeSecretKey;
 
@@ -58,6 +58,7 @@ void ConfigureServices(IServiceCollection services, string dbConnectionString)
     // Add API explorer and Swagger
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
+    services.AddSingleton(new BlobServiceClient(azureStorageConnectionString));
     
     // Add database context
     services.AddDbContext<DataContext>(options =>
