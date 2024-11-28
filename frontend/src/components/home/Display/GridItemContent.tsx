@@ -1,10 +1,8 @@
-import { productsType } from "@/types/types"
+import { productType } from "@/types/types"
 import Image from "next/image"
 
 export default function ({ productsInfo }: {
-    productsInfo: productsType & {
-        id: number
-    }
+    productsInfo: productType
 }) {
     const {
         itemName,

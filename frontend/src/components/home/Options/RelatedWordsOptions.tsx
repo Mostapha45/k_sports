@@ -3,13 +3,9 @@
 import Loading from "@/components/LoadingWordsOptions";
 import RelatedWord from "./RelatedWord"
 import { useProductAndWordsContext } from "@/contexts/ProductsAndWordsContext";
+import { RelatedWordType } from "@/types/types";
 
-type WordType = {
-    word: string,
-    productCount: number
-}
-
-export default function RelatedWordsOptions({words}:{words: WordType[]}) {
+export default function RelatedWordsOptions({words}:{words: RelatedWordType[]}) {
 
     const {isPending, startTransition} = useProductAndWordsContext()
 

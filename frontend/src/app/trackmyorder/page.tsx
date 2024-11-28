@@ -1,62 +1,67 @@
-"use client";
+"use client"
 
 import { purchasedItemsFormat } from "@/types/types";
 import { useSession } from "next-auth/react";
-import { CSSProperties, useRef, useState } from "react";
-
-const styles: { [key: string]: CSSProperties } = {
-  inputs: {
-    border: "1px solid grey",
-    borderRadius: "5px",
-    width: "100%",
-    lineHeight: "7vh",
-    outline: "none",
-    marginBottom: "2vh",
-    textAlign: "center",
-  },
-};
-
+import { useCallback, useRef, useState } from "react";
 
 export default function TrackMyOrderPage() {
   const [purchasedItems, setPurchasedItems] = useState<purchasedItemsFormat[]>([]);
   const orderIdInput = useRef<HTMLInputElement>(null);
   const [deliverStatus, setDeliverStatus] = useState<string>()
+  const [error, setError] = useState<string | undefined>()
 
   const { data: session, status } = useSession()
 
-  const getPurchasedItems = async (e: React.FormEvent<HTMLFormElement>) => {
+  const getPurchasedItems = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+
+    setError(undefined)
     e.preventDefault();
 
-    if (status !== "authenticated") return
+    if (status !== "authenticated") {
+      setError("Please login to track your order")
+      return
+    }
 
-    const email = session.user?.email
-
-    if (!email) return
+    const email = session?.user?.email;
+    if (!email) {
+      setError("Email not found")
+      return
+    }
 
     const orderIdElement = orderIdInput.current
 
-    if (orderIdElement === null) throw "Try again"
-
-    const { fetchPurchasedItems } = await import("@/helpers/helpers")
-
-    const { deliveryDate, products } = await fetchPurchasedItems(orderIdElement.value, session?.user?.email as string);
-
-    if (deliveryDate && products.length > 0) {
-      const deliverDate = new Date(deliveryDate)
-
-      const today = new Date();
-      const deliverDateString = deliverDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-      setDeliverStatus(() => {
-        if (today < deliverDate) return `Products will be delivered at ${deliverDateString}`
-        else if (today === deliverDate) return `Products will be delivered today`
-        else return `Products should have been delivered. If not, please contact KSports`
-      }
-      )
-
-      setPurchasedItems(products);
+    if (!orderIdElement) {
+      setError("Order ID input not found")
+      return
     }
-  };
+
+    try {
+
+      const { fetchPurchasedItems } = await import("@/helpers/helpers")
+
+      const { deliveryDate, products } = await fetchPurchasedItems(orderIdElement.value, session?.user?.email as string);
+
+      if (deliveryDate && products.length > 0) {
+        const deliverDate = new Date(deliveryDate)
+
+        const today = new Date();
+        const deliverDateString = deliverDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+        setDeliverStatus(() => {
+          if (today < deliverDate) return `Products will be delivered at ${deliverDateString}`
+          if (today === deliverDate) return `Products will be delivered today`
+          return `Products should have been delivered. If not, please contact KSports`
+        }
+        )
+
+        setPurchasedItems(products)
+      } else {
+        setError("No products found for this order")
+      }
+    } catch (err) {
+      setError((err as Error).message || "An error occurred")
+    }
+  }, [session, status])
 
   return (
     <>
@@ -68,8 +73,16 @@ export default function TrackMyOrderPage() {
             ref={orderIdInput}
             name="orderId"
             type="text"
-            style={styles.inputs}
-            placeholder="   Order Number"
+            className="
+            border-2
+            border-gray-500
+            w-full
+            text-center
+            rounded-md
+            placeholder-gray-700
+            mb-5
+            py-3"
+            placeholder="Enter your Order Number here"
           />
           <button
             type="submit"
@@ -100,9 +113,10 @@ export default function TrackMyOrderPage() {
               })
             }
           </div>
-        ) : (
-          <h3>No data</h3>
-        )}
+        ) :
+          error ? <h3 className="text-red-500 font-semibold text-lg">{error}</h3> :
+            <h3>No data</h3>
+        }
       </div>
     </>
   );

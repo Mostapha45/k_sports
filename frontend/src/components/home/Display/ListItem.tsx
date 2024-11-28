@@ -1,12 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import ItemQuantitySet from "../ItemQuantitySet";
-import { productsType } from "@/types/types";
+import { productType } from "@/types/types";
 
 export default function ListItem({ productsInfo }: {
-    productsInfo: productsType & {
-        id: number
-    }
+    productsInfo: productType
 }) {
 
     const {

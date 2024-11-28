@@ -14,7 +14,13 @@ export type NavLinkProp = {
 
 export type SortType = (typeof PRICE_SORT)[number];
 
-export type productsType = {
+export type RelatedWordType = {
+    word: string,
+    productCount: number
+}
+
+export type productType = {
+    id: number,
     itemName: string;
     authorLink?: string;
     authorName?: string;
@@ -33,8 +39,6 @@ export type checkoutItemStructure = {
     },
     Quantity: number;
 };
-
-export type productsStorageType = Map<number, productsType>;
 
 export type trackedItemsType = {
     deliveryDate: string,

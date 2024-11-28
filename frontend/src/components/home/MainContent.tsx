@@ -4,10 +4,10 @@ import { useState } from "react";
 import ShopOptions from "./Options/ShopOptions";
 import DisplayOrientationSelections from "./Options/DisplayOrientationSelections";
 import AddedItemNotifications from "../AddedItemNotifications";
-import { productsStorageType } from "@/types/types";
+import { productType } from "@/types/types";
 import DisplayItems from "./Display/DisplayItems";
 
-export default function MainContent({ displayItems, searchParams }: { searchParams: any, displayItems: productsStorageType }) {
+export default function MainContent({ products, searchParams }: { searchParams: any, products: productType[] }) {
 
     const [isDisplayGrid, setIsDisplayGrid] = useState(false)
 
@@ -17,6 +17,6 @@ export default function MainContent({ displayItems, searchParams }: { searchPara
             <AddedItemNotifications />
             <ShopOptions searchParams={searchParams}/>
         </div>
-        <DisplayItems isDisplayGrid={isDisplayGrid} products={displayItems} />
+        <DisplayItems isDisplayGrid={isDisplayGrid} products={products} />
     </>
 }

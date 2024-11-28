@@ -1,18 +1,23 @@
-import { checkoutItemStructure, trackedItemsType } from "@/types/types";
+import { checkoutItemStructure, productType, RelatedWordType, trackedItemsType } from "@/types/types";
 import { Session } from "next-auth";
 import { backendHost } from "../../constants/consts";
 
-export async function fetchData(endpoint: string, requestData?: any) {
+async function fetchData<T>(endpoint: string, requestData?: any): Promise<T> {
   const response = await fetch(`${backendHost}${endpoint}`, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
+    "cache":"no-store",
     body: JSON.stringify(requestData),
   }
   );
 
   return await response.json()
 }
+
+export const fetchProducts = async(queryParamsStr: string) => await fetchData<productType[]>(`Products?${queryParamsStr}`)
+
+export const fetchRelatedWords = async(queryParamsStr: string) => await fetchData<RelatedWordType[]>(`Words?${queryParamsStr}`)
 
 export async function checkout(
   itemsForCheckout: checkoutItemStructure[],

@@ -3,12 +3,10 @@
 import { useState } from "react"
 import ItemQuantitySet from "../ItemQuantitySet";
 import GridItemContent from "./GridItemContent";
-import { productsType } from "@/types/types";
+import { productType } from "@/types/types";
 
 const GridItem = ({ productsInfo }: {
-    productsInfo: productsType & {
-        id: number
-    }
+    productsInfo: productType
 }) => {
 
     const [isShow, setIsShow] = useState(false)

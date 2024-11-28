@@ -3,7 +3,7 @@
 import { useCookies } from "react-cookie";
 import { AddOrReduceEnum } from "./Display/DisplayItems";
 import { ActionType, Notifications } from "../AddedItemNotifications";
-import { productsType } from "@/types/types";
+import { productType } from "@/types/types";
 
 interface CartItem {
     itemName: string
@@ -13,7 +13,7 @@ interface CartItem {
 }
 
 interface Props {
-    productsInfo: productsType & { id: number }
+    productsInfo: productType
     display: "grid" | "list"
     show?: boolean
 }
