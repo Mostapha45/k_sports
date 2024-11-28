@@ -45,7 +45,6 @@ export async function checkout(
     if (url) return url
     else throw "no url"
   } catch (error) {
-    console.error(error)
     throw error
   }
 }
@@ -53,10 +52,7 @@ export async function checkout(
 
 export async function fetchPurchasedItems(orderId: string, email: string): Promise<trackedItemsType> {
   try {
-    const items = await fetchData(`OrderStatuses?orderId=${orderId}&email=${email}`) as trackedItemsType
-
-    return items
-
+    return await fetchData<trackedItemsType>(`OrderStatuses?orderId=${orderId}&email=${email}`)
   } catch (error) {
     throw error
   }

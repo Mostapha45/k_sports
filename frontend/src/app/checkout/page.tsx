@@ -60,13 +60,15 @@ export default function CheckoutPage() {
 
       const newQuantity = action === "Increment" ? quantity + 1 : quantity - 1;
 
+      if (newQuantity < 1) return
+      
       setCookie("cart", {
         ...cart,
         [id]: {
-          itemName: itemName,
-          imageSrc: imageSrc,
+          itemName,
+          imageSrc,
           quantity: newQuantity,
-          price: price,
+          price
         }
       })
     }
