@@ -7,7 +7,6 @@ async function fetchData<T>(endpoint: string, requestData?: any): Promise<T> {
     headers: {
       "Content-Type": "application/json"
     },
-    "cache":"no-store",
     body: JSON.stringify(requestData),
   }
   );
