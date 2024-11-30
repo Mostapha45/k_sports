@@ -1,11 +1,10 @@
 import GoogleProvider from 'next-auth/providers/google'
 import NextAuth from "next-auth/next"
-import { NextAuthOptions } from 'next-auth'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const options: NextAuthOptions = {
+const options = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_OAUTH_CLIENT_ID ?? (() => { throw new Error("GOOGLE_OAUTH_CLIENT_ID is required") })(),
