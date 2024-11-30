@@ -31,7 +31,7 @@ namespace backend.Controller
         /// <param name="keywords">Additional keywords to filter products.</param>
         /// <returns>A list of products that match the specified criteria.</returns>
         [HttpGet]
-        public ActionResult GetProducts(int? limit = null, double? minPrice = null, string? sort = null, double? maxPrice = null, string? contains = null, string? keywords = null)
+        public ActionResult GetProducts(bool? shouldTakeAll = false, int? limit = null, double? minPrice = null, string? sort = null, double? maxPrice = null, string? contains = null, string? keywords = null)
         {
 
             try
@@ -87,7 +87,15 @@ namespace backend.Controller
                     ? query.OrderBy(p => p.Price)
                     : query.OrderByDescending(p => p.Price);
 
-                query = query.Take(limit ?? 10);
+                if (!shouldTakeAll.HasValue)
+                {
+                    query = query.Take(limit ?? 10);
+                }
+
+                else if (!shouldTakeAll.Value)
+                {
+                    query = query.Take(limit ?? 10);
+                }
 
                 var products = query.Select(p => p.MapToProductResponseDto()).ToList();
 

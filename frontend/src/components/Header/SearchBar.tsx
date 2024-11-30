@@ -15,7 +15,7 @@ export default function SearchBar() {
     </div> : <></>
 }
 
-function SearchProductInput() {
+export function SearchProductInput() {
     const [searchTerm, setSearchTerm] = useState<string>();
 
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value);

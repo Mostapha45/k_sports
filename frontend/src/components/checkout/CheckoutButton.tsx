@@ -56,7 +56,7 @@ export default function CheckoutButton() {
         <button
             onClick={async () => {
 
-                const { checkout } = await import("@/helpers/helpers")
+                const { checkout } = await import("@/utils/utils")
                 const checkUser = () => status === "unauthenticated" && router.push(`${process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://k-sports.vercel.app/"}api/auth/signin`)
 
                 const checkoutUrl = await checkout(itemsForCheckout, session, checkUser);

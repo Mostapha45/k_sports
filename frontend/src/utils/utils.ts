@@ -3,6 +3,8 @@ import { Session } from "next-auth";
 import { backendHost } from "../../constants/consts";
 
 async function fetchData<T>(endpoint: string, requestData?: any): Promise<T> {
+
+  console.log(`${backendHost}${endpoint}`)
   const response = await fetch(`${backendHost}${endpoint}`, {
     headers: {
       "Content-Type": "application/json"
@@ -14,9 +16,9 @@ async function fetchData<T>(endpoint: string, requestData?: any): Promise<T> {
   return await response.json()
 }
 
-export const fetchProducts = async(queryParamsStr: string) => await fetchData<productType[]>(`Products?${queryParamsStr}`)
+export const fetchProducts = async (queryParamsStr: string) => await fetchData<productType[]>(`Products?${queryParamsStr}`)
 
-export const fetchRelatedWords = async(queryParamsStr: string) => await fetchData<RelatedWordType[]>(`Words?${queryParamsStr}`)
+export const fetchRelatedWords = async (queryParamsStr: string) => await fetchData<RelatedWordType[]>(`Words?${queryParamsStr}`)
 
 export async function checkout(
   itemsForCheckout: checkoutItemStructure[],

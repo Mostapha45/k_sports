@@ -3,7 +3,7 @@ import CartIcon from "@/components/home/CartIcon";
 import MainContent from "@/components/home/MainContent";
 import type { Metadata } from 'next'
 import { SearchParams } from "@/types/types";
-import { fetchProducts, fetchRelatedWords } from "@/helpers/helpers";
+import { fetchProducts, fetchRelatedWords } from "@/utils/utils";
 import ItemsCountDisplay from "@/components/home/Display/ItemsCountDisplay";
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
 
             {
                 products.length > 0 ? <>
-                    <ItemsCountDisplay count={products.length}/>
+                    <ItemsCountDisplay count={products.length} />
                     <MainContent products={products} searchParams={searchParams} />
                 </>
                     : <h3>No items</h3>

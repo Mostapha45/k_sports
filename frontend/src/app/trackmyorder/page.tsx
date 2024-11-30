@@ -37,7 +37,7 @@ export default function TrackMyOrderPage() {
 
     try {
 
-      const { fetchPurchasedItems } = await import("@/helpers/helpers")
+      const { fetchPurchasedItems } = await import("@/utils/utils")
 
       const { deliveryDate, products } = await fetchPurchasedItems(orderIdElement.value, session?.user?.email as string);
 

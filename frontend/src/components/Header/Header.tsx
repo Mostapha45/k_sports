@@ -4,6 +4,7 @@ import HamburgerMenuIcon from "./HamburgerMenuIcon";
 import UserOptions from "./UserOptions";
 import { NavLinkProp } from "@/types/types"
 import SearchBar from "./SearchBar";
+import AdminLink from "./AdminLink";
 
 const NavLinks: NavLinkProp[] = [
   {
@@ -36,6 +37,8 @@ export default function Header() {
               <p>{title}</p>
             </Link>
           ))}
+
+          <AdminLink />
 
           {/* Larger devices display */}
           <UserOptions />
