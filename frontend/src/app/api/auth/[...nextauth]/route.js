@@ -29,7 +29,7 @@ const options = {
                 ...session,
                 user: {
                     ...session.user,
-                    isAdmin: token.isAdmin as boolean
+                    isAdmin: token.isAdmin
                 }
             }
         },
