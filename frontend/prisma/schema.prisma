@@ -7,10 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admins {
-  Email String @id(map: "PK_Admins")
-}
-
 model ProductProductRelatedWord {
   ProductRelatedWordsId Int
   ProductsId            Int
@@ -18,31 +14,27 @@ model ProductProductRelatedWord {
   Products              Products            @relation(fields: [ProductsId], references: [Id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ProductProductRelatedWord_Products_ProductsId")
 
   @@id([ProductRelatedWordsId, ProductsId], map: "PK_ProductProductRelatedWord")
-  @@index([ProductsId], map: "IX_ProductProductRelatedWord_ProductsId")
 }
 
 model ProductRelatedWords {
   Id                        Int                         @id(map: "PK_ProductRelatedWords") @default(autoincrement())
-  Word                      String                      @db.Citext
+  Word                      String                      @unique(map: "unique_word") @db.Citext
   ProductProductRelatedWord ProductProductRelatedWord[]
 }
 
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model Products {
   Id                        Int                         @id(map: "PK_Products") @default(autoincrement())
-  ItemName                  String                      @db.Citext
+  ItemName                  String                      @unique(map: "unique_productname") @db.Citext
   AuthorLink                String?
   AuthorName                String?
   ImageCredit               String?
-  ImageSrc                  String
+  ImageSrc                  String                      @unique(map: "unique_imgsrc")
   Description               String
   Price                     Decimal                     @db.Decimal(10, 2)
   ProductProductRelatedWord ProductProductRelatedWord[]
 }
 
-model EFMigrationsHistory {
-  MigrationId    String @id(map: "PK___EFMigrationsHistory") @db.VarChar(150)
-  ProductVersion String @db.VarChar(32)
-
-  @@map("__EFMigrationsHistory")
+model Admins {
+  Email String @id
 }
