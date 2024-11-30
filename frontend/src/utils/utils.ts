@@ -4,7 +4,6 @@ import { backendHost } from "../../constants/consts";
 
 async function fetchData<T>(endpoint: string, requestData?: any): Promise<T> {
 
-  console.log(`${backendHost}${endpoint}`)
   const response = await fetch(`${backendHost}${endpoint}`, {
     headers: {
       "Content-Type": "application/json"

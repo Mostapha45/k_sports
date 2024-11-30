@@ -16,7 +16,7 @@ export default function UserOptions() {
 
         if (status === 'loading') return
 
-        status === "unauthenticated" && router.push(`${process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://k-sports.vercel.app/"}api/auth/signin`)
+        status === "unauthenticated" && router.push(`${process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://k-sports-assignment.vercel.app/"}api/auth/signin`)
     }
 
     return (
